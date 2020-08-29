@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, CsvException {
-        PictureConverter converter = new PictureConverter();
-        List<Double> testing = converter.convert("test.png");
+    public static void main(String[] args) throws IOException {
+        PictureConverter converter = new PictureConverter(50, 50);
+        List<Double> testing = converter.convertImageToListOfSignals("test.png");
         System.out.println("Converting is fine!");
         converter.save("new_image.png", testing);
         System.out.println("All is fine!");
@@ -43,9 +43,9 @@ public class Main {
         NeuralNetwork neuralNetwork = new NeuralNetwork(topology);
         List<Neuron> result;
 
-        for (int i = 0; i < 303; i++){
+        for (int i = 0; i < 303; i++) {
             result = neuralNetwork.predict(dataSet.getInputSignals(i));
-            for (Neuron neuron : result){
+            for (Neuron neuron : result) {
                 System.out.println("Good result: " +
                         dataSet.getExpectedResult(i).get(0) +
                         ", current result: " +
@@ -57,20 +57,20 @@ public class Main {
         neuralNetwork.learnBackPropagation(dataSet, 50000);
 
         double special = Math.pow(10, 4);
-        for (int i = 0; i < 303; i++){
+        for (int i = 0; i < 303; i++) {
             result = neuralNetwork.predict(dataSet.getInputSignals(i));
-            for (Neuron neuron : result){
+            for (Neuron neuron : result) {
                 System.out.println("Line: " +
                         String.valueOf(i) +
                         " Good result: " +
                         dataSet.getExpectedResult(i).get(0) +
                         ", current result: " +
-                        Math.round(neuron.getOutput()*special)/special);
+                        Math.round(neuron.getOutput() * special) / special);
             }
         }
     }
 
-    private static void createCompleteDataset(DataSet dataSet){
+    private static void createCompleteDataset(DataSet dataSet) {
         List<Double> inputs = Arrays.asList(0.0, 0.0, 0.0, 0.0);
         List<Double> outputs = Collections.singletonList(0.0);
         dataSet.addData(inputs, outputs);
