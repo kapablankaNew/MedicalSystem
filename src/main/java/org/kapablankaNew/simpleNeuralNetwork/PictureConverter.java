@@ -1,12 +1,13 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
-import org.jetbrains.annotations.*;
+import lombok.NonNull;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PictureConverter {
@@ -81,7 +82,7 @@ public class PictureConverter {
         return result;
     }
 
-    private BufferedImage reduceHorizontally(@NotNull BufferedImage image) {
+    private BufferedImage reduceHorizontally(@NonNull BufferedImage image) {
         BufferedImage newImage = new BufferedImage(newWidth, height, image.getType());
         groupHeight = 1;
         int step = image.getWidth() % newWidth;
@@ -100,7 +101,7 @@ public class PictureConverter {
         return newImage;
     }
 
-    private BufferedImage reduceVertically(@NotNull BufferedImage image) {
+    private BufferedImage reduceVertically(@NonNull BufferedImage image) {
         BufferedImage newImage = new BufferedImage(width, newHeight, image.getType());
         groupWidth = 1;
         int step = image.getHeight() % newHeight;
@@ -119,7 +120,7 @@ public class PictureConverter {
         return newImage;
     }
 
-    private BufferedImage zoom(@NotNull BufferedImage image) {
+    private BufferedImage zoom(@NonNull BufferedImage image) {
         BufferedImage newImage = new BufferedImage(Math.max(width, newWidth), Math.max(height, newHeight), image.getType());
         Graphics2D graphics2D = newImage.createGraphics();
         graphics2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

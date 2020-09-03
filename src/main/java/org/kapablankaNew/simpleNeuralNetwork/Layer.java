@@ -1,6 +1,7 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Layer {
     //list of neurons in this layer
@@ -13,19 +14,19 @@ public class Layer {
         layerType = type;
     }
 
-    public NeuronType getLayerType() {
-        return layerType;
-    }
-
     public Layer(List<Neuron> neurons) {
         this(neurons, NeuronType.Normal);
+    }
+
+    public NeuronType getLayerType() {
+        return layerType;
     }
 
     public List<Neuron> getNeurons() {
         return neurons;
     }
 
-    public Neuron getNeuron(int index){
+    public Neuron getNeuron(int index) {
         return neurons.get(index);
     }
 
@@ -34,13 +35,11 @@ public class Layer {
     }
 
     //method for combining the output signals of all neurons in this layer into a single list
-    public List<Double> getOutputSignals(){
+    public List<Double> getOutputSignals() {
         List<Double> signals = new ArrayList<>();
-        for(Neuron neuron : neurons){
+        for (Neuron neuron : neurons) {
             signals.add(neuron.getResult());
         }
         return signals;
     }
-
-
 }

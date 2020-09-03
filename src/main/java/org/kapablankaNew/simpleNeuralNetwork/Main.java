@@ -16,7 +16,7 @@ public class Main {
         System.out.println("All is fine!");
     }
 
-    private static void Test() throws IOException, CsvException {
+    private static void Test() throws IOException, CsvException, DataSetException, TopologyException, NeuralNetworkException {
         CSVReader reader = new CSVReader(new FileReader("./src/heart.csv"));
         List<String[]> lines = reader.readAll();
 
@@ -70,7 +70,7 @@ public class Main {
         }
     }
 
-    private static void createCompleteDataset(DataSet dataSet) {
+    private static void createCompleteDataset(DataSet dataSet) throws DataSetException {
         List<Double> inputs = Arrays.asList(0.0, 0.0, 0.0, 0.0);
         List<Double> outputs = Collections.singletonList(0.0);
         dataSet.addData(inputs, outputs);

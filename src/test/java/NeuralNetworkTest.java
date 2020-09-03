@@ -1,5 +1,5 @@
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvException;
+import lombok.SneakyThrows;
 import org.junit.Test;
 import org.kapablankaNew.simpleNeuralNetwork.DataSet;
 import org.kapablankaNew.simpleNeuralNetwork.NeuralNetwork;
@@ -7,17 +7,17 @@ import org.kapablankaNew.simpleNeuralNetwork.Neuron;
 import org.kapablankaNew.simpleNeuralNetwork.Topology;
 
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class NeuralNetworkTest {
     private NeuralNetwork neuralNetwork;
 
     @Test
-    public void feedForwardTest() throws IOException, CsvException {
+    @SneakyThrows
+    public void feedForwardTest() {
         CSVReader reader = new CSVReader(new FileReader("./src/heart.csv"));
         List<String[]> lines = reader.readAll();
 
@@ -40,7 +40,7 @@ public class NeuralNetworkTest {
 
         dataSet.normalize();
 
-        Topology topology = new Topology(13, 1, new int[] {10, 5, 2}, 0.001);
+        Topology topology = new Topology(13, 1, new int[]{10, 5, 2}, 0.001);
         NeuralNetwork neuralNetwork = new NeuralNetwork(topology);
         List<Neuron> result;
 
@@ -48,9 +48,9 @@ public class NeuralNetworkTest {
 
         double special = Math.pow(10, 2);
 
-        for (int i = 0; i < 304; i++){
+        for (int i = 0; i < 304; i++) {
             result = neuralNetwork.predict(dataSet.getInputSignals(i));
-            double current = Math.round(result.get(0).getOutput()*special)/special;
+            double current = Math.round(result.get(0).getOutput() * special) / special;
             assertEquals("line" + String.valueOf(i), dataSet.getExpectedResult(i).get(0), current, 0.15);
         }
     }

@@ -1,6 +1,7 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Topology {
     //number of inputs in neural network (in first layer)
@@ -12,21 +13,30 @@ public class Topology {
 
     private final double learningRate;
 
-    public Topology(int inputCount, int outputCount, int[] layers, double learningRate) {
+    public Topology(int inputCount, int outputCount, int[] layers, double learningRate) throws TopologyException {
+        if (inputCount <= 0) {
+            throw new TopologyException("Number of inputs must be greater than 0");
+        }
+        if (outputCount <= 0) {
+            throw new TopologyException("Number of outputs must be greater than 0");
+        }
+        if (learningRate <= 0) {
+            throw new TopologyException("Learning rate must be greater than 0");
+        }
         this.inputCount = inputCount;
         this.outputCount = outputCount;
         this.learningRate = learningRate;
-        hiddenLayers = new ArrayList<Integer>();
-        for (int i = 0; i < layers.length; i++){
-            hiddenLayers.add(layers[i]);
+        hiddenLayers = new ArrayList<>();
+        for (int layer : layers) {
+            hiddenLayers.add(layer);
         }
     }
 
-    public Topology(int inputCount, int outputCount, int layer, double learningRate){
-        this(inputCount, outputCount, new int[] {layer}, learningRate);
+    public Topology(int inputCount, int outputCount, int layer, double learningRate) throws TopologyException {
+        this(inputCount, outputCount, new int[]{layer}, learningRate);
     }
 
-    public Topology(int inputCount, int outputCount, double learningRate){
+    public Topology(int inputCount, int outputCount, double learningRate) throws TopologyException {
         this(inputCount, outputCount, null, learningRate);
     }
 
