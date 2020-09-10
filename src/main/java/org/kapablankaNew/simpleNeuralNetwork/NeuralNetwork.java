@@ -11,8 +11,11 @@ public class NeuralNetwork {
 
     private final Topology topology;
 
+    private DataSet lastDataSet;
+
     public NeuralNetwork(Topology topology) {
         this.topology = topology;
+        lastDataSet = null;
         layers = new ArrayList<>();
         createInputLayer();
         createHiddenLayers();
@@ -63,17 +66,29 @@ public class NeuralNetwork {
     }
 
     @NonNull
-    public List<Neuron> predict(List<Double> inputSignals) throws NeuralNetworkException {
+    public List<Neuron> predict(List<Double> inputSignals ) throws NeuralNetworkException, DataSetException {
+        if (lastDataSet == null){
+            throw new NeuralNetworkException("Neural network isn't trained");
+        }
         if (inputSignals.size() != topology.getInputCount()) {
             throw new NeuralNetworkException("The number of input signals not equals " +
                     "to the number of inputs of neural network!");
         }
+        //scaling input signals
+        lastDataSet.scaleEntry(inputSignals);
         //for feed forward sending signals to input neurons
         sendSignalsToInputNeurons(inputSignals);
         //after this go through all the other layers
         feedForwardAllLayersAfterInput();
         //return list of output neurons
         return layers.get(layers.size() - 1).getNeurons();
+    }
+
+    private void predictLearning(List<Double> inputSignals){
+        //for feed forward sending signals to input neurons
+        sendSignalsToInputNeurons(inputSignals);
+        //after this go through all the other layers
+        feedForwardAllLayersAfterInput();
     }
 
     private void sendSignalsToInputNeurons(List<Double> inputSignals) {
@@ -100,21 +115,25 @@ public class NeuralNetwork {
     }
 
     //method for the correction of weights
-    public void learnBackPropagation(DataSet dataSet, int numberOfSteps) throws NeuralNetworkException {
+    public void learnBackPropagation(DataSet dataSet, int numberOfSteps) throws NeuralNetworkException, DataSetException {
         if (dataSet.getInputCount() != topology.getInputCount()) {
             throw new NeuralNetworkException("The number of input signals in dataset not equals " +
                     "to the number of inputs of the trained neural network!");
         }
+        lastDataSet = dataSet;
+        //scaling dataset
+        lastDataSet.scale();
         for (int i = 0; i < numberOfSteps; i++) {
             //going trough dataset
             for (int j = 0; j < dataSet.getSize(); j++) {
                 //getting lists of input signal and expected results from dataset
-                List<Double> inputs = dataSet.getInputSignals(j);
-                List<Double> expectedResults = dataSet.getExpectedResult(j);
-                //first - calculate result
+                List<Double> inputs = lastDataSet.getInputSignals(j);
+                List<Double> expectedResults = lastDataSet.getExpectedResult(j);
+                //first - calculate result, using special method without scaling inputs,
+                //because dataset is already scaled
                 //second - calculate errors
                 //third - correct weights
-                this.predict(inputs);
+                this.predictLearning(inputs);
                 this.calculateErrors(expectedResults);
                 this.updateWeights(topology.getLearningRate());
             }

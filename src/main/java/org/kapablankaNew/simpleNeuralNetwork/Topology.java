@@ -32,7 +32,8 @@ public class Topology {
         }
     }
 
-    public Topology(int inputCount, int outputCount, int layer, double learningRate) throws TopologyException {
+    public Topology(int inputCount, int outputCount, int layer, double learningRate)
+            throws TopologyException {
         this(inputCount, outputCount, new int[]{layer}, learningRate);
     }
 
