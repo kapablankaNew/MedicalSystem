@@ -2,10 +2,11 @@ package org.kapablankaNew.simpleNeuralNetwork;
 
 import lombok.NonNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataSet {
+public class DataSet implements Serializable {
     private final List<List<Double>> inputSignals;
 
     private final List<List<Double>> expectedResults;

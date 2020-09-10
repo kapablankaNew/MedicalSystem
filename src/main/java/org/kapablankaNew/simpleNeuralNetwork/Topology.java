@@ -1,9 +1,10 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Topology {
+public class Topology implements Serializable {
     //number of inputs in neural network (in first layer)
     private final int inputCount;
     //number of outputs of neural network (ih last layer)

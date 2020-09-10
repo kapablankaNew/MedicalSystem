@@ -1,10 +1,11 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Neuron {
+public class Neuron implements Serializable {
     //list of weights of the synapses between current neuron and previous layer
     private final List<Double> weights;
 

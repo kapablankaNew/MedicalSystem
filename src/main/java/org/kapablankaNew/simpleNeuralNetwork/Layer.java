@@ -1,9 +1,10 @@
 package org.kapablankaNew.simpleNeuralNetwork;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Layer {
+public class Layer implements Serializable {
     //list of neurons in this layer
     private final List<Neuron> neurons;
 

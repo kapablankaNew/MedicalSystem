@@ -4,7 +4,6 @@ import lombok.NonNull;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -172,7 +171,7 @@ public class PictureConverter {
         return brightness > boundary ? 255 : 0;
     }
 
-    public BufferedImage getImageFromSignals(List<Double> pixels) throws IOException {
+    public BufferedImage getImageFromSignals(List<Double> pixels) {
         //create new image
         BufferedImage image = new BufferedImage(width, height, type);
         for (int i = 0; i < width; i++) {

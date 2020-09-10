@@ -2,11 +2,12 @@ package org.kapablankaNew.simpleNeuralNetwork;
 
 import lombok.NonNull;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class NeuralNetwork {
+public class NeuralNetwork implements Serializable {
     private final List<Layer> layers;
 
     private final Topology topology;
@@ -66,8 +67,8 @@ public class NeuralNetwork {
     }
 
     @NonNull
-    public List<Neuron> predict(List<Double> inputSignals ) throws NeuralNetworkException, DataSetException {
-        if (lastDataSet == null){
+    public List<Neuron> predict(List<Double> inputSignals) throws NeuralNetworkException, DataSetException {
+        if (lastDataSet == null) {
             throw new NeuralNetworkException("Neural network isn't trained");
         }
         if (inputSignals.size() != topology.getInputCount()) {
@@ -84,7 +85,7 @@ public class NeuralNetwork {
         return layers.get(layers.size() - 1).getNeurons();
     }
 
-    private void predictLearning(List<Double> inputSignals){
+    private void predictLearning(List<Double> inputSignals) {
         //for feed forward sending signals to input neurons
         sendSignalsToInputNeurons(inputSignals);
         //after this go through all the other layers
@@ -115,7 +116,7 @@ public class NeuralNetwork {
     }
 
     //method for the correction of weights
-    public void learnBackPropagation(DataSet dataSet, int numberOfSteps) throws NeuralNetworkException, DataSetException {
+    public void learnBackPropagation(DataSet dataSet, int numberOfSteps) throws NeuralNetworkException {
         if (dataSet.getInputCount() != topology.getInputCount()) {
             throw new NeuralNetworkException("The number of input signals in dataset not equals " +
                     "to the number of inputs of the trained neural network!");
@@ -170,5 +171,24 @@ public class NeuralNetwork {
                 }
             }
         }
+    }
+
+    //this method allowed to save the neural network to the specified file
+    public void save(String path) throws IOException {
+        FileOutputStream fileOutputStream = new FileOutputStream(path);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+        objectOutputStream.writeObject(this);
+        objectOutputStream.close();
+        fileOutputStream.close();
+    }
+
+    //this method allowed to load the neural network from the specified file
+    public static NeuralNetwork load(String path) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(path);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        NeuralNetwork neuralNetwork = (NeuralNetwork) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+        return neuralNetwork;
     }
 }
