@@ -2,8 +2,10 @@ package org.kapablankaNew.simpleNeuralNetwork;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import org.kapablankaNew.simpleNeuralNetwork.GUI.MainForm;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileReader;
@@ -11,18 +13,19 @@ import java.io.IOException;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException, TopologyException, NeuralNetworkException, CsvException, DataSetException {
-        Test();
-        PictureConverter converter = new PictureConverter(500, 500);
-        File file = new File("test.png");
-        BufferedImage image = ImageIO.read(file);
-
-        List<Double> testing = converter.convertImageToListOfSignals(image);
-        System.out.println("Converting is fine!");
-        image = converter.getImageFromSignals(testing);
-        file = new File("new_image.png");
-        ImageIO.write(image, "png", file);
-        System.out.println("All is fine!");
+    public static void main(String[] args) throws IOException, TopologyException, NeuralNetworkException, CsvException, DataSetException, ClassNotFoundException, UnsupportedLookAndFeelException {
+        MainForm form = new MainForm();
+//        Test();
+//        PictureConverter converter = new PictureConverter(500, 500);
+//        File file = new File("test.png");
+//        BufferedImage image = ImageIO.read(file);
+//
+//        List<Double> testing = converter.convertImageToListOfSignals(image);
+//        System.out.println("Converting is fine!");
+//        image = converter.getImageFromSignals(testing);
+//        file = new File("new_image.png");
+//        ImageIO.write(image, "png", file);
+//        System.out.println("All is fine!");
     }
 
     private static void Test() throws IOException, CsvException, DataSetException, TopologyException, NeuralNetworkException {
