@@ -9,10 +9,10 @@ public class MyJTextField extends JTextField {
     public MyJTextField(int width, int height, String textDefault, JFrame mainFrame){
         super();
         this.mainFrame = mainFrame;
-        this.setFont(new Font("Verdana", Font.PLAIN, 12));
         this.setText(textDefault);
         this.setName(textDefault);
         this.setSize(width, height);
+        this.setFont(new Font("Verdana", Font.ITALIC, 10));
         this.addFocusListener(new FieldFocusListener(mainFrame));
     }
 }

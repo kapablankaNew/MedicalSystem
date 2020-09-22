@@ -37,10 +37,6 @@ public class Neuron implements Serializable {
         this(inputCount, NeuronType.Normal);
     }
 
-    public double getOutput() {
-        return output;
-    }
-
     public double getDelta() {
         return delta;
     }
