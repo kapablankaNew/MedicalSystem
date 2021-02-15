@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SimpleNeuralNetwork" />
         <module name="SimpleNeuralNetworkJava" />
+        <module name="MedicalSystem" />
       </profile>
     </annotationProcessing>
   </component>
